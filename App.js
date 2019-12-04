@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Button, Image, Text, TextInput} from 'react-native';
+import { StyleSheet, View, ScrollView, Image, Text, TextInput} from 'react-native';
 import * as firebase from "firebase";
 import HtmlParser from 'react-native-htmlparser';
 import Section from "./Section";
 import { WebView } from 'react-native-webview';
-import { SearchBar } from 'react-native-elements';
+import { Button, SearchBar, Icon } from 'react-native-elements';
 
 // Initialize Firebase
 const config = {
@@ -85,9 +85,10 @@ export default class App extends React.Component {
                 }else if(this.searchTerm(key, searchTerm)){
                   this.searchSections.push(component);
                 }
-            }else{
-              // Content
-              components.push(<Button color = '#8c1515' onPress={() => this.viewContent(link)} key = { count } title = "View Content"/>)
+            } else {
+              // Content button
+              let component = <Button title="View" icon={{ name: "rightcircleo", type: "antdesign", size: 20, color: '#5388d0'}} iconRight type="clear" onPress={() => this.viewContent(link)} key = { count } />
+              components.push(component)
             }
         })
         return(components)
@@ -158,7 +159,7 @@ export default class App extends React.Component {
           case "content":
             return(
               <View style = { webViewStyles.container } >
-                <Button color = '#8c1515' onPress = {() => { this.setState({navigation: this.makeNav(this.state.table_of_contents, 0, '0/Manual/', '')}); this.setState({location: 'home'} )}} title = {"Back"}/>
+                <Button type="clear" icon={{ name: "leftcircleo", type: "antdesign", size: 20, color: '#5388d0'}} onPress = {() => { this.setState({navigation: this.makeNav(this.state.table_of_contents, 0, '0/Manual/', '')}); this.setState({location: 'home'} )}} title = {"Back"}/>
                 <WebView
                   style = {{
                     width: '100%',

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { Button, Icon } from 'react-native-elements';
 
 library.add(faCoffee)
 export default class Section extends React.Component {
@@ -18,14 +19,14 @@ export default class Section extends React.Component {
         if (this.state.clickStatus == "false") {
             return(
                 <View>
-                    <Button style = { sectionStyles.button } color='#175e54' title={ this.props.name } onPress={ () => this.setState({"clickStatus": "true" }) } >
+                    <Button type="clear" icon={{ name: "downcircleo", type: "antdesign", size: 20, color: '#5388d0'}} style = { sectionStyles.button } title={ this.props.name } onPress={ () => this.setState({"clickStatus": "true" }) } >
                     </Button>
                 </View>
             )
         } else {
             return(
                 <View>
-                    <Button color = '#8c1515' title={ this.props.name } onPress={ () => this.setState({"clickStatus": "false" }) } >
+                    <Button type="clear" icon={{ name: "downcircleo", type: "antdesign", size: 20, color: '#5388d0'}} title={ this.props.name } onPress={ () => this.setState({"clickStatus": "false" }) } >
                     </Button>
                     <View style = {{paddingLeft: 20}}>
                       { this.props.children }
