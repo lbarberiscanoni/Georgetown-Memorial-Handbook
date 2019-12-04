@@ -1,0 +1,33 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
+    "expo": "^35.0.0",
+    "filereader": "^0.10.3",
+    "firebase": "^7.5.0",
+    "i": "^0.3.6",
+    "native-css": "^2.0.0",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native-css": "^2.1.2",
+    "react-native-htmlparser": "^1.0.5",
+    "react-native-pdf-view": "^0.3.2",
+    "react-native-web": "^0.11.7",
+    "react-native-webview": "^7.5.2",
+    "tcomb-form-native": "^0.6.20"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^7.1.0"
+  },
+  "private": true
+}
