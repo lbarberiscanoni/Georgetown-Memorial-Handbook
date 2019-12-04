@@ -4,6 +4,7 @@ import * as firebase from "firebase";
 import HtmlParser from 'react-native-htmlparser';
 import Section from "./Section";
 import { WebView } from 'react-native-webview';
+import { SearchBar } from 'react-native-elements';
 
 // Initialize Firebase
 const config = {
@@ -41,6 +42,7 @@ export default class App extends React.Component {
         this.searchSections = [];
         this.viewContent = this.viewContent.bind(this);
         this.listenForItems(this.itemsRef);
+        this.search = this.search.bind(this);
     }
 
     listenForItems(itemsRef) {
@@ -63,8 +65,14 @@ export default class App extends React.Component {
       return sectionName.toLowerCase().includes(searchTerm.toLowerCase())
     }
 
-    search(){
-
+    search(text){
+      if (text) {
+        this.searchSections = [];
+        this.makeNav(this.state.table_of_contents, 0, '0/Manual/', text)
+        this.setState({navigation: this.searchSections});
+      } else {
+        this.setState({navigation: this.makeNav(this.state.table_of_contents, 0, '0/Manual/', '')});
+      }
     }
 
     makeNav(ob, count, link, searchTerm = '') {
@@ -123,25 +131,26 @@ export default class App extends React.Component {
           case "home":
             return(
               <View contentContainerStyle={ styles.contentContainer }>
-              <ScrollView>
-                <View style = { styles.imageHolder }>
-                  <Image style = { styles.image } source={require('./assets/george_town.png')} />
-                  <TextInput
-                    style = { styles.search }
-                    editable = {true}
-                    placeholder = "Search"
-                    underlineColorAndroid = 'white'
-                    onChangeText = { (text) => {
-                      if(text){
-                        this.searchSections = [];
-                        this.makeNav(this.state.table_of_contents, 0, '0/Manual/', text)
-                        this.setState({navigation: this.searchSections});
-                      }else{
-                        this.setState({navigation: this.makeNav(this.state.table_of_contents, 0, '0/Manual/', '')});
-                      }
-                    } } />
-                </View>
-                  { this.state.navigation }
+                <ScrollView>
+                  <View style = { styles.header }>
+                    <View style = { styles.imageHolder }>
+                      <Image style = { styles.image } source={require('./assets/nih.png')} />
+                      <Image style = { styles.image } source={require('./assets/medstar.png')} />
+                      <Image style = { styles.image } source={require('./assets/med_school.png')} />
+                    </View>
+                    <Text style ={ styles.title } >Department of Neurology</Text>
+                  </View>
+                  <View>
+                    <SearchBar 
+                      placeholder="Search"
+                      onChangeText={this.search}
+                      lightTheme
+                      value={this.searchSections}
+                    />
+                  </View>
+                  <View>
+                    { this.state.navigation }
+                  </View>
                 </ScrollView>
               </View>
             )
@@ -172,10 +181,10 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   contentContainer: {
-      position: 'absolute',
-      marginBottom: '20%',
-      width: '100%',
-      height: '100%',
+      // position: 'absolute',
+      // marginBottom: '20%',
+      // width: '100%',
+      // height: '100%',
     },
     loginContainer: {
         position: 'absolute',
@@ -185,27 +194,29 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
       },
-    imageHolder: {
+    header: {
       height: 100,
       padding: '10%',
-      paddingTop: '20%',
-      paddingBottom: '30%',
-      marginBottom: '5%',
+      paddingTop: '10%',
+      paddingBottom: '35%',
       backgroundColor: "#0069BA",
+    },
+    imageHolder: {
+      flexDirection: 'row',
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
     },
     image: {
-      width: '70%',
+      width: '30%',
       height: 100,
       resizeMode: 'contain',
     },
-    search: {
-      backgroundColor: 'white',
-      width: '70%',
-      height: 30,
-      color: 'black'
+    title: {
+      textAlign: 'center',
+      fontStyle: "italic",
+      color: "white",
+      fontSize: 18,
     },
     userName: {
       backgroundColor: 'white',
