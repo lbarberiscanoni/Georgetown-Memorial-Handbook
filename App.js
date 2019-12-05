@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Image, Text, TextInput} from 'react-native';
+import { StyleSheet, View, ScrollView, Image, Text, TextInput, ImageBackground } from 'react-native';
 import * as firebase from "firebase";
 import HtmlParser from 'react-native-htmlparser';
 import Section from "./Section";
 import { WebView } from 'react-native-webview';
 import { Button, SearchBar, Icon } from 'react-native-elements';
+
 
 // Initialize Firebase
 const config = {
@@ -76,6 +77,7 @@ export default class App extends React.Component {
     }
 
     makeNav(ob, count, link, searchTerm = '') {
+      console.log(link)
         let components = []
         Object.keys(ob).map((key) => {
             if (key != "content") {
@@ -108,25 +110,32 @@ export default class App extends React.Component {
         switch(this.state.location) {
           case "login":
             return(
-              <View style={ styles.loginContainer }>
-                <Text> { this.state.errorMessage } </Text>
-                <Button title="Login" onPress={this.login.bind(this)}/>
-                  <TextInput
-                    style={ styles.email }
-                    editable = {true}
-                    placeholder = "User Name"
-                    underlineColorAndroid = 'white'
-                    onChangeText = { (text) => this.setState({email: text}) }
-                  />
-                  <TextInput
-                    secureTextEntry={true}
-                    style={ styles.password }
-                    editable = {true}
-                    placeholder = "Password"
-                    underlineColorAndroid = 'white'
-                    onChangeText = { (text) => this.setState({password: text}) }
-                  />
+              <View style={ styles.artContainer }>
+                <ImageBackground source={ require('./assets/art.png') } style={styles.backgroundImage}>
+                    <View style={ styles.loginContainer} >
+                      <View style={{ opacity: 0.7, margin: "5%" }}>
+                        <TextInput 
+                          style={ styles.input }
+                          placeholder = "Your Email Address"
+                          onChangeText = { (text) => this.setState({email: text}) }
+                          placeholderTextColor="white"
+                        />
+                      </View>
+                      <View style={{ opacity: 0.7, margin: "5%" }}>
+                        <TextInput 
+                          style={ styles.input }
+                          secureTextEntry={true}
+                          placeholder = "Password"
+                          underlineColorAndroid = 'white'
+                          onChangeText = { (text) => this.setState({password: text}) }
+                          placeholderTextColor="white"
+                        />
+                      </View>
+                      <Button title="Login" onPress={this.login.bind(this)}/>
+                    </View>
+                </ImageBackground>
               </View>
+
             )
             break;
           case "home":
@@ -139,7 +148,9 @@ export default class App extends React.Component {
                       <Image style = { styles.image } source={require('./assets/medstar.png')} />
                       <Image style = { styles.image } source={require('./assets/med_school.png')} />
                     </View>
-                    <Text style ={ styles.title } >Department of Neurology</Text>
+                    <View>
+                      <Text style ={ styles.title } >Department of Neurology</Text>
+                    </View>
                   </View>
                   <View>
                     <SearchBar 
@@ -182,56 +193,61 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   contentContainer: {
-      // position: 'absolute',
-      // marginBottom: '20%',
-      // width: '100%',
-      // height: '100%',
-    },
-    loginContainer: {
-        position: 'absolute',
-        backgroundColor: '#0069BA',
-        marginBottom: '20%',
-        padding: '10%',
-        width: '100%',
-        height: '100%',
-      },
-    header: {
-      height: 100,
-      padding: '10%',
-      paddingTop: '10%',
-      paddingBottom: '35%',
-      backgroundColor: "#0069BA",
-    },
-    imageHolder: {
-      flexDirection: 'row',
-      width: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    image: {
-      width: '30%',
-      height: 100,
-      resizeMode: 'contain',
-    },
-    title: {
-      textAlign: 'center',
-      fontStyle: "italic",
-      color: "white",
-      fontSize: 18,
-    },
-    userName: {
-      backgroundColor: 'white',
-      width: '100%',
-      height: 30,
-      color: 'black'
-    },
-    password: {
-      backgroundColor: 'white',
-      width: '100%',
-      height: 30,
-      color: 'black'
-    }
-  });
+    position: 'absolute',
+    marginBottom: '20%',
+    width: '100%',
+    height: '100%',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'contain', // or 'stretch'
+  },
+  artContainer: {
+    padding: '5%',
+    width: '100%',
+    height: '100%',
+    color: "white",
+  },
+  loginContainer: {
+    position: 'absolute',
+    backgroundColor: '#0069BA',
+    marginTop: "60%",
+    width: '100%',
+    borderRadius: 20,
+  },
+  input: {
+    padding: "5%",
+    height: 50, 
+    borderColor: 'gray', 
+    borderWidth: 1,
+    color: "white",
+    borderRadius: 10,
+  },
+  header: {
+    height: 100,
+    padding: '10%',
+    paddingTop: '5%',
+    paddingBottom: '38%',
+    backgroundColor: "#0069BA",
+  },
+  imageHolder: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: '30%',
+    height: 100,
+    resizeMode: 'contain',
+  },
+  title: {
+    textAlign: 'center',
+    fontStyle: "italic",
+    color: "white",
+    fontSize: 18,
+  },
+});
 
 const webViewStyles = StyleSheet.create({
   container: {
